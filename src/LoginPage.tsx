@@ -1,4 +1,3 @@
-import "./LoginPage.css"
 import SeccionCentral from "./SeccionCentral"
 
 const LoginPage = () => {

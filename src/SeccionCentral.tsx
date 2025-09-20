@@ -4,10 +4,8 @@ import Titulo from "./Titulo"
 
 const SeccionCentral = () => {
     return <div>
-        <Titulo />
-        { /* Imagen */ }
+        <Titulo texto="Log" color={"#F5E111"}/>
         <Imagen />
-        { /* Formulario */ }
         <Formulario />
     </div>
 }
