@@ -4,8 +4,8 @@ import Titulo from "./Titulo"
 
 const SeccionCentral = () => {
     return <div>
-        <Titulo texto="Log" color={"#F5E111"}/>
-        <Imagen />
+        <Titulo texto="Log" color={"#11E111"}/>
+        <Imagen mostrarImagen={ false }/>
         <Formulario />
     </div>
 }
