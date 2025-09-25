@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent } from "react"
 
-const Formulario = () => {
+const Formulario = (props : FormularioProps) => {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
 
@@ -10,6 +10,10 @@ const Formulario = () => {
 
     const handlePasswordOnChange = (e : ChangeEvent<HTMLInputElement>) => {
         setPassword(e.currentTarget.value)
+    }
+
+    const butOnClick = () => {
+        props.onLogin(username, password)
     }
 
     return <form>
@@ -23,10 +27,16 @@ const Formulario = () => {
             type="password"
             value={ password }
             onChange={ handlePasswordOnChange } />
-        <button className="btn btn-primary w-100" type="button">
+        <button className="btn btn-primary w-100" 
+            type="button"
+            onClick={ butOnClick }>
             Ingresar
         </button>
     </form>
+}
+
+interface FormularioProps {
+    onLogin : (username : string, password : string) => void
 }
 
 export default Formulario
