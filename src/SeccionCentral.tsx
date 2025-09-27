@@ -1,17 +1,20 @@
 import Formulario from "./Formulario"
 import Imagen from "./Imagen"
+import Mensaje from "./Mensaje"
 import Titulo from "./Titulo"
 
 const SeccionCentral = (props : SeccionCentralProps) => {
     return <div>
         <Titulo texto="Log" color={"#11E111"}/>
-        <Imagen mostrarImagen={ false }/>
+        <Imagen mostrarImagen={ true }/>
         <Formulario onLogin={ props.onLogin }/>
+        <Mensaje resultadoLogin={props.resultadoLogin}/>
     </div>
 }
 
 interface SeccionCentralProps {
     onLogin : (username : string, password : string ) => void
+    resultadoLogin : boolean
 }
 
 export default SeccionCentral

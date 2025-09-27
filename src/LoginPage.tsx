@@ -16,7 +16,8 @@ const LoginPage = () => {
         <div className="col"></div>
         <div className="col">
             <SeccionCentral 
-                onLogin={ login }/>
+                onLogin={ login }
+                resultadoLogin={ false }/>
         </div>
         <div className="col"></div>
     </div>  
