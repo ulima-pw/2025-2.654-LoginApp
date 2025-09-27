@@ -2,7 +2,7 @@ import { useState } from "react"
 import SeccionCentral from "./SeccionCentral"
 
 const LoginPage = () => {
-    const [resultadoLogin, setResultadoLogin] = useState<boolean>(true)
+    const [resultadoLogin, setResultadoLogin] = useState<boolean | undefined>(undefined)
 
     const login = (username : string, password : string) => {
         if (username == "PW" && password == "juler"){

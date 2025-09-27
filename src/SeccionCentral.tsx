@@ -8,13 +8,17 @@ const SeccionCentral = (props : SeccionCentralProps) => {
         <Titulo texto="Log" color={"#11E111"}/>
         <Imagen mostrarImagen={ true }/>
         <Formulario onLogin={ props.onLogin }/>
-        <Mensaje resultadoLogin={props.resultadoLogin}/>
+        {
+            props.resultadoLogin != undefined ?
+                <Mensaje resultadoLogin={props.resultadoLogin}/> :
+                ""
+        }
     </div>
 }
 
 interface SeccionCentralProps {
     onLogin : (username : string, password : string ) => void
-    resultadoLogin : boolean
+    resultadoLogin? : boolean
 }
 
 export default SeccionCentral
