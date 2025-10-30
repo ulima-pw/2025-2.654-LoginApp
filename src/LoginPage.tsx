@@ -6,12 +6,42 @@ const LoginPage = () => {
     const [resultadoLogin, setResultadoLogin] = useState<boolean | undefined>(undefined)
     const navigate = useNavigate()
 
-    const login = (username : string, password : string) => {
-        if (username == "PW" && password == "juler"){
-            // Login exitoso
-            console.log("Login exitoso")
-            setResultadoLogin(true)
-            navigate("/main")  // => MainPage
+    const login = async (username : string, password : string) => {
+        const resp = await fetch("http://localhost:5002/login", {
+            method : "post",
+            body : JSON.stringify({ 
+                username : username,
+                password : password
+            }),
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        })
+
+        if (resp.status == 400) {
+            // Error en login
+            const data = await resp.json()
+            console.error(data.error)
+
+            const dataUsuario = sessionStorage.getItem("USER")
+            if (dataUsuario == null) {
+                const usuario = {
+                    username : username,
+                    cantidadIntentos : 1
+                }
+                sessionStorage.setItem("USER", JSON.stringify(usuario))
+            } else {
+                const usuario = JSON.parse(dataUsuario)
+                usuario.username = username
+                usuario.cantidadIntentos += 1
+
+                sessionStorage.setItem("USER", JSON.stringify(usuario))
+            }
+            setResultadoLogin(false)
+        } else {
+            // Login correcto
+            const data = await resp.json()
+            const token = data.token
 
             const fechaAnterior = localStorage.getItem("FECHA_LOGIN")
 
@@ -28,34 +58,19 @@ const LoginPage = () => {
             if (dataUsuario == null) {
                 const usuario = {
                     username : username,
-                    cantidadIntentos : 0
+                    cantidadIntentos : 0,
+                    token : token
                 }
                 sessionStorage.setItem("USER", JSON.stringify(usuario))
             } else {
                 const usuario = JSON.parse(dataUsuario)
                 usuario.username = username
+                usuario.token = token
 
                 sessionStorage.setItem("USER", JSON.stringify(usuario))
             }
-        }else {
-            // Error login
-            console.log("Error login")
-            setResultadoLogin(false)
-
-            const dataUsuario = sessionStorage.getItem("USER")
-            if (dataUsuario == null) {
-                const usuario = {
-                    username : username,
-                    cantidadIntentos : 1
-                }
-                sessionStorage.setItem("USER", JSON.stringify(usuario))
-            } else {
-                const usuario = JSON.parse(dataUsuario)
-                usuario.username = username
-                usuario.cantidadIntentos += 1
-
-                sessionStorage.setItem("USER", JSON.stringify(usuario))
-            }
+            setResultadoLogin(true)
+            navigate("/main")  // => MainPage
         }
     }
 
